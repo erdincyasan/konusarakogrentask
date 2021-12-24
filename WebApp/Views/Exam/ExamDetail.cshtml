@@ -1,0 +1,120 @@
+﻿@using Application.Wrapper
+@using Shared.Dtos.Exam
+@using System.Text.Json
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Layout";
+}
+@model Result<ExamDto>
+<div class="row">
+    <div class="col-md-12 justify-content-center">
+        <h1>
+            @Model.Data.ExamTitle
+        </h1>
+    </div>
+    <div class="col-md-12 justify-content-center">
+        <p>
+            @Model.Data.ExamText
+        </p>
+    </div>
+    <div class="row">
+        @for (var i = 0; i < Model.Data.Questions.Count; i++)
+        {
+            <div class="col-md-6">
+
+                <div class="border">
+                    <span class="bold">
+                        @(i+1) )
+                    </span>
+                    <b>
+                        @Model.Data.Questions[i].Question
+                    </b>
+                </div>
+                <div class="row">
+                    @for (var j = 0; j < Model.Data.Questions[i].ExamQuestionChoices.Count; j++)
+                    {
+                        <label class="@Model.Data.Questions[i].ExamQuestionChoices[j].Id.ToString()">
+                            <input type="radio"
+                           id="@("question"+(i+1))"
+                           name="@Model.Data.Questions[i].Id.ToString()"
+                           value="@Model.Data.Questions[i].ExamQuestionChoices[j].Id.ToString()"
+                           />
+                            @switch (j)
+                            {
+                                case 0:
+                                    <span>A) </span>
+                                    break;
+                                case 1:
+                                    <span>B) </span>
+                                    break;
+                                case 2:
+                                    <span>C) </span>
+                                    break;
+                                case 3:
+                                    <span>D) </span>
+                                    break;
+                            }
+                            <b>
+                                @Model.Data.Questions[i].ExamQuestionChoices[j].Choice
+                            </b>
+                        </label>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row">
+        <div class="d-flex justify-content-center">
+            <button id="completeButton" onclick="completeQuiz()" class="btn btn-success form-control mt-5">
+                Complete Quiz
+            </button>
+        </div>
+    </div>
+    <div id="correctCount" class="alert alert-primary mt-5" style="display:none;font-size:18px">
+
+    </div>
+
+</div>
+@section Scripts{
+<script src="~/lib/jquery/dist/jquery.min.js">
+</script>
+<script>
+      function completeQuiz(){
+          var questionAnswers=[];
+        for(i=0 ; i<4;i++){
+            var questionAnswerId=$("#question"+(i+1)+":checked").val();
+            if(questionAnswerId)
+            questionAnswers.push(questionAnswerId);
+        }
+        var obj={
+            AnswersId:questionAnswers
+        };
+        console.log(JSON.stringify(obj));
+
+        $.ajax({
+  url: 'https://localhost:7208/api/ExamCheck',
+  contentType: 'application/json',
+  type: 'POST',
+  data:JSON.stringify(obj),
+  success:(dat)=>{
+       var response= JSON.parse(JSON.stringify(dat));
+      if(response.succeeded){
+          response.data.questionAndAnswers.map(x=>{
+              if(x.isCorrect)
+                $("."+x.answerId).css("background-color","green");
+               else
+                $("."+x.answerId).css("background-color","red");
+          });
+          $("#correctCount").html("<h2> Correct answer count "+response.data.correctCount+"<h2>");
+          $("#correctCount").css("display","block");
+      }
+  }
+});
+        $("#completeButton").addClass("disabled","disabled");
+    }
+</script>
+
+
+}

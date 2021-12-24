@@ -1,0 +1,36 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "82015646-1409-4907-8610-f8d4ec2dd3e9": {
+      "ProjectGuid": "82015646-1409-4907-8610-f8d4ec2dd3e9",
+      "DisplayName": "Shared.Dtos",
+      "ColorIndex": 0
+    },
+    "6f399664-5466-46e1-bdf0-4d47b03de347": {
+      "ProjectGuid": "6f399664-5466-46e1-bdf0-4d47b03de347",
+      "DisplayName": "Application",
+      "ColorIndex": 1
+    },
+    "3ac3f4b1-5108-4641-906c-a5fb4f04ebd8": {
+      "ProjectGuid": "3ac3f4b1-5108-4641-906c-a5fb4f04ebd8",
+      "DisplayName": "Domain",
+      "ColorIndex": 2
+    },
+    "5a839e40-5b41-431b-bb59-0b7a33a2bb2f": {
+      "ProjectGuid": "5a839e40-5b41-431b-bb59-0b7a33a2bb2f",
+      "DisplayName": "Infrastructure",
+      "ColorIndex": 3
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "9e92a53c-6b1a-4272-8f05-254c225693fc": {
+      "ProjectGuid": "9e92a53c-6b1a-4272-8f05-254c225693fc",
+      "DisplayName": "WebApp",
+      "ColorIndex": 4
+    }
+  },
+  "NextColorIndex": 5
+}

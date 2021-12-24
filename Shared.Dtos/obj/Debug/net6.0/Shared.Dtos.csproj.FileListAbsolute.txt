@@ -1,0 +1,12 @@
+C:\Users\Huriş\source\repos\KonusarakOgren.QuizManager\Shared.Dtos\bin\Debug\net6.0\Shared.Dtos.deps.json
+C:\Users\Huriş\source\repos\KonusarakOgren.QuizManager\Shared.Dtos\bin\Debug\net6.0\Shared.Dtos.dll
+C:\Users\Huriş\source\repos\KonusarakOgren.QuizManager\Shared.Dtos\bin\Debug\net6.0\ref\Shared.Dtos.dll
+C:\Users\Huriş\source\repos\KonusarakOgren.QuizManager\Shared.Dtos\bin\Debug\net6.0\Shared.Dtos.pdb
+C:\Users\Huriş\source\repos\KonusarakOgren.QuizManager\Shared.Dtos\obj\Debug\net6.0\Shared.Dtos.csproj.AssemblyReference.cache
+C:\Users\Huriş\source\repos\KonusarakOgren.QuizManager\Shared.Dtos\obj\Debug\net6.0\Shared.Dtos.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Huriş\source\repos\KonusarakOgren.QuizManager\Shared.Dtos\obj\Debug\net6.0\Shared.Dtos.AssemblyInfoInputs.cache
+C:\Users\Huriş\source\repos\KonusarakOgren.QuizManager\Shared.Dtos\obj\Debug\net6.0\Shared.Dtos.AssemblyInfo.cs
+C:\Users\Huriş\source\repos\KonusarakOgren.QuizManager\Shared.Dtos\obj\Debug\net6.0\Shared.Dtos.csproj.CoreCompileInputs.cache
+C:\Users\Huriş\source\repos\KonusarakOgren.QuizManager\Shared.Dtos\obj\Debug\net6.0\Shared.Dtos.dll
+C:\Users\Huriş\source\repos\KonusarakOgren.QuizManager\Shared.Dtos\obj\Debug\net6.0\ref\Shared.Dtos.dll
+C:\Users\Huriş\source\repos\KonusarakOgren.QuizManager\Shared.Dtos\obj\Debug\net6.0\Shared.Dtos.pdb

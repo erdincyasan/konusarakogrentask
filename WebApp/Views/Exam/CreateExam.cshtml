@@ -1,0 +1,93 @@
+﻿@using Shared.Dtos.Exam.Requests
+@using Shared.Dtos.ExamQuestion.Requests
+@using Shared.Dtos.ExamQuestionChoice.Requests
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Layout";
+}
+@model CreateExamRequest
+<div class="container">
+    <form asp-action="CreateExam" asp-controller="Exam" method="post">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="ExamTitle">
+                        Enter title for exam
+                    </label>
+                    <input class="form-control" asp-for="ExamTitle" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="ExamText">
+                        Enter text for exam
+                    </label>
+                    <textarea class="form-control" asp-for="ExamText"></textarea>
+                </div>
+            </div>
+
+        </div>
+
+
+        @for (var j = 0; j < Model.ExamQuestions.Count; j++)
+        {
+            <div class="row border mt-5">
+                <div class="col-md-12">
+                    <label for="ExamQuestions[@j].Question">
+                        Question @(j+1)
+                    </label>
+                    <input class="form-control" name="ExamQuestions[@j].Question" />
+                    <div class="row">
+                        @for (var i = 0; i < @Model.ExamQuestions[j].QuestionChoices.Count; i++)
+                        {
+                            <div class=col-md-6>
+                                <label name="ExamQuestions[@j].QuestionChoices[@i].Choice">
+                                    @switch (i)
+                                    {
+                                        case 0:
+                                            <span>A</span>
+                                            break;
+                                        case 1:
+                                            <span>B</span>
+                                            break;
+                                        case 2:
+                                            <span>C</span>
+                                            break;
+                                        case 3:
+                                            <span>D</span>
+                                            break;
+                                    }
+                                </label>
+                                <input type="text" class="form-control" id="ExamQuestions[@j].QuestionChoices[@i].Choice" name="ExamQuestions[@j].QuestionChoices[@i].Choice" />
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                           <div class="col-md-12">
+                               <label for="correctAnswer@(j+1)">Choose Correct Answer</label>
+                               <select name="ExamQuestions[@j].CorrectIndex">
+                                   <option value="0">A</option>
+                                   <option value="1">B</option>
+                                   <option value="2">C</option>
+                                   <option value="3">D</option>
+                               </select>
+                           </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+        <div class="col-md-12 form-group">
+            <button type="submit" class="btn btn-success form-control">
+                Save
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+@section Scripts{
+
+}
