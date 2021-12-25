@@ -1,0 +1,53 @@
+﻿@using Shared.Dtos.Identity.Models
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model RegisterModel
+
+<div class="content">
+    <div class="card m-auto">
+        <form asp-action="Register" asp-controller="Auth" method="post">
+            <div class="form-group mt-1">
+                <label class="form-label" for="Name">
+                    Enter your First name
+                </label>
+                <input asp-for="Firstname" class="form-control" id="Name" type="text" />
+            </div>
+            <div class="form-group mt-1">
+                <label class="form-label" for="lastname">
+                    Enter your surname
+                </label>
+                <input asp-for="Lastname" class="form-control" id="lastname" type="text" />
+            </div>
+            <div class="form-group mt-1">
+                <label class="form-label" for="Username">
+                    Enter your username
+                </label>
+                <input asp-for="Username" class="form-control" id="Username" type="text" />
+            </div>
+            <div class="form-group mt-1">
+                <label class="form-label" for="email">
+                    Enter your email
+                </label>
+                <input asp-for="Email" class="form-control" id="email" type="email" />
+            </div>
+            <div class="form-group mt-1">
+                <label class="form-label" for="password">
+                    Please enter your password
+                </label>
+                <input asp-for="Password" class="form-control" name="password" id="password" type="password" />
+            </div>
+            <div class="form-group mt-1">
+                <button class="btn btn-success form-control">
+                    Register
+                </button>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="alert alert-primary text-danger text-lead">
+            </div>
+
+        </form>
+    </div>
+</div>
+

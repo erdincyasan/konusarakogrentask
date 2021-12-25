@@ -11,5 +11,6 @@ namespace Shared.Dtos.Exam
         public Guid Id { get; set; }
         public string ExamTitle { get; set; }
         public string ExamText { get; set; }
+        public DateTime ExamDate { get; set; }
     }
 }

@@ -13,7 +13,6 @@ namespace Application.Catalog.Interfaces
     public interface IExamService
     {
         Task<Result<Guid>> ExamCreateAsync(CreateExamRequest request);
-        Task<Result<Guid>> UpdateExamAsync(UpdateExamRequest request, Guid id);
         Task<Result<Guid>> RemoveExamRequest(Guid id);
         Task<Result<ExamDto>> GetExamById(Guid id);
         Task<PaginatedResult<ExamDetailDto>> GetPaginatedResult(ExamPaginationListFilter filter);

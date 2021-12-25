@@ -10,21 +10,36 @@
 
     <div class="row">
        
-        <table class="d-lg-table table-bordered table-hover">
+        <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th>
+                    <th scope="col">
                         Exam Title
                     </th>
+                    <th scope="col">
+                        Exam Date
+                    </th>
+                    <th scope="col">
+                        Remove
+                    </th>
+
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.Data)
                 {
                     <tr>
-                        <td>
+                        <td scope="row">
                             <a asp-action="ExamDetail" asp-route-id="@item.Id">
                                 @item.ExamTitle
+                            </a>
+                        </td>
+                        <td>
+                            @item.ExamDate
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" asp-action="Remove" asp-controller="Exam" asp-route-id="@item.Id">
+            REMOVE
                             </a>
                         </td>
                     </tr>

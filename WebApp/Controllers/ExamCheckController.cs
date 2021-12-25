@@ -1,4 +1,5 @@
 ﻿using Application.Catalog.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Dtos.Exam.Requests;
@@ -15,6 +16,7 @@ namespace WebApp.Controllers
         {
             _examService = examService;
         }
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CheckAnswers([FromBody]GetExamQuestionAnswers req)
         {

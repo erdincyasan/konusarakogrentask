@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Identity.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,14 +12,14 @@ namespace Domain.Catalog.Quiz
         public string ExamTitle { get; set; }
         public string ExamText { get; set; }
         public List<ExamQuestion> Questions { get; set; }
+        public Guid UserId { get; set; }
+        public DateTime ExamDate { get; set; }
 
-        // public DateTime ExamDate { get; set; }
-
-        public Exam(string examTitle,string examText)
+        public Exam(string examTitle,string examText,Guid userId)
         {
             Id = Guid.NewGuid();
-
-            // ExamDate = DateTime.Now;
+            UserId = userId;
+            ExamDate = DateTime.Now;
             ExamTitle = examTitle;
             ExamText = examText;
         }

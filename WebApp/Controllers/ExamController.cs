@@ -1,13 +1,16 @@
 ﻿using Application.Catalog.Interfaces;
 using Application.Common.Interfaces;
 using Application.Wrapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Shared.Dtos.Exam;
 using Shared.Dtos.Exam.Filters;
 using Shared.Dtos.Exam.Requests;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class ExamController : BaseController
     {
         private readonly IExamService _service;
@@ -25,17 +28,23 @@ namespace WebApp.Controllers
 
             return View(await _service.GetPaginatedResult(filter));
         }
+        
         [HttpGet("{id}")]
-
         public async Task<IActionResult> ExamDetail(Guid id)
         {
             return View(await _service.GetExamById(id));
-        }       
+        }
         [HttpGet]
-        public IActionResult CreateExam()
+        public async Task<IActionResult> CreateExam()
         {
-            _content.GetContentUrl("https://www.wired.com/story/the-world-is-messy-idealizations-make-the-physics-simple/");
+            var titlesAndContents = await _content.GetContentUrl();
+            ViewBag.TitlesAndContents = titlesAndContents;
+            
             var crq = new CreateExamRequest();
+            var titleList = titlesAndContents.Select(x => new { Text = x.Title, Value = x.Title }).ToList();
+            SelectList selectList = new SelectList(titleList, "Value","Text", titleList.FirstOrDefault());
+            
+            ViewBag.selectListForTitle = selectList;
             for (int i = 0; i < 4; i++)
             {
                 crq.ExamQuestions.Add(new() { Question = "" });
@@ -56,6 +65,13 @@ namespace WebApp.Controllers
             request.ExamQuestions.ForEach(x => x.QuestionChoices[x.CorrectIndex].isCorrect = true);
             // TODO move this logic process to ExamService
             await _service.ExamCreateAsync(request);
+            return RedirectToAction("GetAllExams");
+        }
+    
+        [HttpGet("remove/{id}")]
+        public async Task<IActionResult> Remove(Guid id)
+        {
+            await _service.RemoveExamRequest(id);
             return RedirectToAction("GetAllExams");
         }
     }

@@ -6,6 +6,7 @@
 *@
 @{
     Layout = "_Layout";
+    var titleAndContents = Json.Serialize(ViewBag.titlesAndContents);
 }
 @model CreateExamRequest
 <div class="container">
@@ -16,13 +17,13 @@
                     <label asp-for="ExamTitle">
                         Enter title for exam
                     </label>
-                    <input class="form-control" asp-for="ExamTitle" />
+                    @Html.DropDownListFor(x=>x.ExamTitle,(SelectList)ViewBag.selectListForTitle,"Choose value!",new{@class="form-control",@onchange="choose()" ,@required="true"})
                 </div>
                 <div class="form-group">
                     <label asp-for="ExamText">
                         Enter text for exam
                     </label>
-                    <textarea class="form-control" asp-for="ExamText"></textarea>
+                    <textarea required class="form-control" rows="25" id="examText" asp-for="ExamText"></textarea>
                 </div>
             </div>
 
@@ -36,7 +37,7 @@
                     <label for="ExamQuestions[@j].Question">
                         Question @(j+1)
                     </label>
-                    <input class="form-control" name="ExamQuestions[@j].Question" />
+                    <input required class="form-control" name="ExamQuestions[@j].Question" />
                     <div class="row">
                         @for (var i = 0; i < @Model.ExamQuestions[j].QuestionChoices.Count; i++)
                         {
@@ -58,14 +59,14 @@
                                             break;
                                     }
                                 </label>
-                                <input type="text" class="form-control" id="ExamQuestions[@j].QuestionChoices[@i].Choice" name="ExamQuestions[@j].QuestionChoices[@i].Choice" />
+                                <input required type="text" class="form-control" id="ExamQuestions[@j].QuestionChoices[@i].Choice" name="ExamQuestions[@j].QuestionChoices[@i].Choice" />
                             </div>
                         }
                     </div>
                     <div class="row">
                            <div class="col-md-12">
                                <label for="correctAnswer@(j+1)">Choose Correct Answer</label>
-                               <select name="ExamQuestions[@j].CorrectIndex">
+                               <select required name="ExamQuestions[@j].CorrectIndex">
                                    <option value="0">A</option>
                                    <option value="1">B</option>
                                    <option value="2">C</option>
@@ -89,5 +90,23 @@
 </div>
 
 @section Scripts{
+    <script src="~/lib/jquery/dist/jquery.min.js">
+    </script>
+    <script>
+        var titleAndContents=JSON.parse(JSON.stringify(@titleAndContents));
+       
+        function choose(){
+
+            var title=$("#ExamTitle").val();
+            titleAndContents.forEach(x=>{
+                console.log("Checking with"+x.title+" ->"+title)
+                if(x.title==title){
+                    $("#examText").val(x.body);
+                    console.log("matched with"+x.title);
+                    console.log("Must be placed"+x.body);
+                }
+            })
+        }
+    </script>
 
 }

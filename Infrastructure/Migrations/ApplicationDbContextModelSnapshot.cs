@@ -23,12 +23,18 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("ExamDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ExamText")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ExamTitle")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

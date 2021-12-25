@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content">
+    <div class="card m-auto">
+        <form asp-action="Login" asp-controller="Auth" method="post">
+            <div class="form-group mt-1">
+                <label class="form-label" for="email">
+                    Enter your email
+                </label>
+                <input class="form-control" name="email" id="email" type="email" />
+            </div>
+            <div class="form-group mt-1">
+                <label class="form-label" for="password">
+                    Please enter your password
+                </label>
+                <input class="form-control" name="password" id="password" type="password" />
+            </div>
+            <div class="form-group mt-1">
+                <button class="btn btn-success form-control">
+                    Login
+                </button>
+            </div>
+            <div class="card-footer">
+                Dont you have an account? 
+                <a asp-action="Register" asp-controller="Auth">
+                    Register from here
+                </a>
+            </div>
+            <div class="alert alert-primary text-danger" asp-validation-summary="ModelOnly">
+
+            </div>
+
+        </form>
+    </div>
+</div>
+

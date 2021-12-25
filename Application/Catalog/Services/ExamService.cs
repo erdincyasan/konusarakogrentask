@@ -1,6 +1,7 @@
 ﻿using Application.Catalog.Interfaces;
 using Application.Common.Interfaces;
 using Application.Common.Specifications;
+using Application.Identity.Interfaces;
 using Application.Wrapper;
 using Domain.Catalog.Quiz;
 using Shared.Dtos.Exam;
@@ -16,16 +17,17 @@ namespace Application.Catalog.Services;
 public class ExamService : IExamService
 {
     private readonly IUow _uow;
-
-    public ExamService(IUow uow)
+    private readonly IUserService _userService;
+    public ExamService(IUow uow, IUserService userService)
     {
         _uow = uow;
+        _userService = userService;
     }
 
     public async Task<Result<Guid>> ExamCreateAsync(CreateExamRequest request)
     {
         var repository = _uow.GetRepository();
-        var exam = new Exam(request.ExamTitle, request.ExamText);
+        var exam = new Exam(request.ExamTitle, request.ExamText, await _userService.GetCurrentUserId());
         var examId = await repository.CreateAsync(exam);
         if (request.ExamQuestions.Count < 4)
         {
@@ -71,7 +73,8 @@ public class ExamService : IExamService
 
     public async Task<PaginatedResult<ExamDetailDto>> GetPaginatedResult(ExamPaginationListFilter filter)
     {
-        return await _uow.GetRepository().GetSearchResult<Exam, ExamDetailDto>(filter.PageNumber, filter.PageSize);
+        var currentUserId = await _userService.GetCurrentUserId();
+        return await _uow.GetRepository().GetSearchResult<Exam, ExamDetailDto>(filter.PageNumber, filter.PageSize, null, null, x => x.UserId == currentUserId);
     }
 
     public async Task<Result<ExamAnswersDto>> GetResults(GetExamQuestionAnswers answers)
@@ -90,20 +93,23 @@ public class ExamService : IExamService
             examAnswersDto.QuestionAndAnswers.Add(new()
             {
                 AnswerId = questionAndAnswers.Id,
-                IsCorrect=questionAndAnswers.IsCorrect
+                IsCorrect = questionAndAnswers.IsCorrect
             });
-            
+
         }
         return await Result<ExamAnswersDto>.SuccessAsync(examAnswersDto);
     }
 
-    public Task<Result<Guid>> RemoveExamRequest(Guid id)
+    public async Task<Result<Guid>> RemoveExamRequest(Guid id)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<Result<Guid>> UpdateExamAsync(UpdateExamRequest request, Guid id)
-    {
-        throw new NotImplementedException();
+        var repository = _uow.GetRepository();
+        var entity = await repository.GetByIdAsync<Exam>(id);
+        if (entity?.UserId == await _userService.GetCurrentUserId())
+        {
+            await repository.RemoveAsync<Exam>(entity);
+            await _uow.SaveChangesAsync();
+            return await Result<Guid>.SuccessAsync(id);
+        }
+        return await Result<Guid>.FailAsync("Failed while removing exam");
     }
 }

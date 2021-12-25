@@ -16,11 +16,8 @@ namespace Application.Common.Interfaces
     public interface IGenericRepository
     {
         Task<Guid> CreateAsync<T>(T entity) where T : BaseEntity;
-        Task<Guid> UpdateAsync<T>(T entity, Guid id) where T : BaseEntity;
-        Task<Guid> RemoveAsync<T>(Guid id);
-        Task<Guid> GetByIdAsync<T,TDto>(Guid id) where T:BaseEntity where TDto:IDto;
+        Task<Guid> RemoveAsync<T>(T entity) where T :BaseEntity;
         Task<T> GetByIdAsync<T>(Guid id) where T : BaseEntity;
-        Task<List<T>> GetAllAsync<T>() where T : BaseEntity;
         Task<PaginatedResult<TDto>> GetSearchResult<T, TDto>(int pageNumber, int pageSize = int.MaxValue, string[] orderBy = null, Filters<T> filters = null, Expression<Func<T, bool>> expression = null, BaseSpecification<T> spec = null, CancellationToken token = default)
             where T : BaseEntity
             where TDto : IDto;

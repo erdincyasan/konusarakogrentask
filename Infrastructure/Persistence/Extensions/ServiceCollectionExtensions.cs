@@ -1,10 +1,16 @@
 ﻿using Application.Catalog.Interfaces;
 using Application.Catalog.Services;
 using Application.Common.Interfaces;
+using Application.Identity.Interfaces;
+using Domain.Identity.Models;
+using FluentValidation;
 using Infrastructure.Common;
+using Infrastructure.Identity;
 using Infrastructure.Persistence.Contexts;
+using Infrastructure.Validators;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Dtos.Identity.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +30,16 @@ namespace Infrastructure.Persistence.Extensions
             {
                 c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
             });
+            services.AddScoped<IValidator<RegisterModel>, RegisterModelValidator>();
             services.AddHttpClient();
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddScoped<IWebsiteContent, WebsiteContent>();
+            services.AddScoped<IUserService, UserService>();
+            services.ConfigureApplicationCookie(opt =>
+            {
+                opt.LoginPath = "/auth/login";
+            });
         }
     }
 }
